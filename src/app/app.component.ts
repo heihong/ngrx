@@ -8,11 +8,10 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-
     ngOnInit(): void {
-     this.store.dispatch(init())
+      this.store.dispatch(init());
     }
-
+  
     constructor(private store: Store) {}
-}
-
+  }
+  

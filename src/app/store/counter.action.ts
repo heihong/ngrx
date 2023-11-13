@@ -1,32 +1,30 @@
-import { Action, createAction, props } from "@ngrx/store";
-
+import { Action, createAction, props } from '@ngrx/store';
 
 export const init = createAction(
-    '[Counter] Init',
-)
+  '[Counter] Init'
+);
 
 export const set = createAction(
-    '[Counter] Init',
-    props<{value:number}>()
-)
-
+  '[Counter] Set',
+  props<{value: number}>(),
+);
 
 export const increment = createAction(
-    '[Counter] Set',
-    props<{value:number}>()
-)
+  '[Counter] Increment',
+  props<{value: number}>()
+);
 
 export const decrement = createAction(
-    '[Counter] Decrement',
-    props<{value:number}>()
-)
-/*
-export const INCREMENT = '[Counter] Increment';
+  '[Counter] Decrement',
+  props<{value: number}>()
+);
 
-export class IncrementAction implements Action{
-    readonly type=  INCREMENT;
+// export const INCREMENT = '[Counter] Increment'
 
-    constructor(public value: number){}
-}
+// export class IncrementAction implements Action {
+//   readonly type = INCREMENT;
 
-export type CounterActions = IncrementAction ;*/
+//   constructor(public value: number) {}
+// }
+
+// export type CounterActions = IncrementAction;

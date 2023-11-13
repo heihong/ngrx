@@ -1,33 +1,41 @@
-import { Actions, createEffect,ofType } from "@ngrx/effects";
-import { decrement, increment, init, set } from "./counter.action";
-import { of, switchMap, tap, withLatestFrom } from "rxjs";
-import { Injectable } from "@angular/core";
-import { Store } from "@ngrx/store";
-import { selectCount } from "./counter.selector";
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { of, switchMap, tap, withLatestFrom } from 'rxjs';
+
+import { decrement, increment, init, set } from './counter.action';
+import { selectCount } from './counter.selector';
 
 @Injectable()
-export class CounterEffects{
-    loadCount = createEffect(()=> this.actions$.pipe(
-        ofType(init),
-        switchMap(()=>{
-            const storedCounter = localStorage.getItem('count')
-            if(storedCounter){
-                return  of(set({value: +storedCounter}));
-            }
-           return of(set({value: 0}));
-        })
-    ));
+export class CounterEffects {
+  loadCount = createEffect(() =>
+    this.actions$.pipe(
+      ofType(init),
+      switchMap(() => {
+        const storedCounter = localStorage.getItem('count');
+        if (storedCounter) {
+          return of(set({ value: +storedCounter }));
+        }
+        return of(set({value: 0}));
+      })
+    )
+  );
 
-
-    saveCount = createEffect(()=> this.actions$.pipe(
+  saveCount = createEffect(
+    () =>
+      this.actions$.pipe(
         ofType(increment, decrement),
         withLatestFrom(this.store.select(selectCount)),
-        tap(([action, counter])=>{
-            console.log('count')
-            localStorage.setItem('count', counter.toString())
+        tap(([action, counter]) => {
+          console.log(action);
+          localStorage.setItem('count', counter.toString());
         })
-    ), 
-    {dispatch: false})
+      ),
+    { dispatch: false }
+  );
 
-    constructor( private actions$ : Actions, private store: Store<{counter:number}>){}
+  constructor(
+    private actions$: Actions,
+    private store: Store<{ counter: number }>
+  ) {}
 }
